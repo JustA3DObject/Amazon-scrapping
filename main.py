@@ -55,6 +55,9 @@ soup1 = BeautifulSoup(page.content, "html.parser")
 soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
 title = soup2.find(id="productTitle").get_text()
 price = soup2.find(class_="a-offscreen").get_text()
+about = soup2.find(
+    class_="a-unordered-list a-vertical a-spacing-mini").get_text()
 
 print(title)
 print(price)
+print(about)
