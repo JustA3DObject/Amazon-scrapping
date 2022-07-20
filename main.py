@@ -57,7 +57,9 @@ title = soup2.find(id="productTitle").get_text()
 price = soup2.find(class_="a-offscreen").get_text()
 about = soup2.find(
     class_="a-unordered-list a-vertical a-spacing-mini").get_text()
+img_url = soup2.find(id="landingImage")
 
 print(title)
 print(price)
 print(about)
+print(img_url['src'])
