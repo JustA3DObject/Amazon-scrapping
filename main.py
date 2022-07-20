@@ -45,8 +45,8 @@ def make_url_list():
 make_url_list()
 # print(url_list)
 
-j = 0
-while(j < 10):
+j = 100
+while(j < 200):
 
     try:
         URL = url_list[j]
@@ -60,25 +60,29 @@ while(j < 10):
         soup1 = BeautifulSoup(page.content, "html.parser")
         soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
         title = soup2.find(id="productTitle").get_text()
-
-    except AttributeError:
-        print("404 ERROR!")
-
-    else:
         price = soup2.find(class_="a-offscreen").get_text()
         about = soup2.find(
             class_="a-unordered-list a-vertical a-spacing-mini").get_text()
         img_url = soup2.find(id="landingImage")
 
         title = title.strip()
-        print(price.strip())
+        price = price.strip()
         about = about.strip()
         img_url = img_url['src'].strip()
 
-header = ["Product", "Price", "Details", "Image URL"]
-data = [title, price, about, img_url]
+    except AttributeError:
+        print("404 ERROR!")
+        title = "404 ERROR!"
 
-with open("AmazonScraperData.csv", 'w', newline='', encoding='UTF8') as f:
-    writer = csv.writer(f)
-    writer.writerow(header)
-    writer.writerow(data)
+        header = ["Product"]
+        data = [title]
+        with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow(data)
+
+    else:
+        header = ["Product", "Price", "Details", "Image URL"]
+        data = [title, price, about, img_url]
+        with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow(data)
