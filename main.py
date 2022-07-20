@@ -1,8 +1,11 @@
+import requests
+from bs4 import BeautifulSoup
 from openpyxl.workbook import Workbook
 from openpyxl import load_workbook
 
 asin_list = []
 country_list = []
+url_list = []
 wb = load_workbook("Amazon Scraping.xlsx")
 ws = wb.active
 col_asin = ws["C"]
@@ -32,7 +35,6 @@ make_country_list()
 
 
 def make_url_list():
-    url_list = []
     i = 0
     for asin, country in (zip(asin_list, country_list)):
         url_list.insert(i, f"https://www.amazon.{country}/dp/{asin}")
@@ -40,3 +42,6 @@ def make_url_list():
 
 
 make_url_list()
+
+html_text = requests.get(url_list[2]).text
+print(html_text)
