@@ -53,4 +53,5 @@ headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/
 page = requests.get(URL, headers=headers)
 soup1 = BeautifulSoup(page.content, "html.parser")
 soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
-print(soup2)
+title = soup2.find(id="productTitle").get_text()
+print(title)
