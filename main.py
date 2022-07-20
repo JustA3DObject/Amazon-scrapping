@@ -42,24 +42,31 @@ def make_url_list():
 
 
 make_url_list()
+# print(url_list)
 
-URL = url_list[2]
+j = 0
+while(j < 10):
 
-# headers from https://httpbin.org/get
+    try:
+        URL = url_list[j]
+        j = j+1
+        # headers from https://httpbin.org/get
 
-headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36",
-           "X-Amzn-Trace-Id": "Root=1-62d8036d-2b173c1f2e4e7a416cc9e554", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-           "Accept-Encoding": "gzip, deflate, br", }
-page = requests.get(URL, headers=headers)
-soup1 = BeautifulSoup(page.content, "html.parser")
-soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
-title = soup2.find(id="productTitle").get_text()
-price = soup2.find(class_="a-offscreen").get_text()
-about = soup2.find(
-    class_="a-unordered-list a-vertical a-spacing-mini").get_text()
-img_url = soup2.find(id="landingImage")
+        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36",
+                   "X-Amzn-Trace-Id": "Root=1-62d8036d-2b173c1f2e4e7a416cc9e554", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+                   "Accept-Encoding": "gzip, deflate, br", }
+        page = requests.get(URL, headers=headers)
+        soup1 = BeautifulSoup(page.content, "html.parser")
+        soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
+        title = soup2.find(id="productTitle").get_text()
+        price = soup2.find(class_="a-offscreen").get_text()
+        about = soup2.find(
+            class_="a-unordered-list a-vertical a-spacing-mini").get_text()
+        img_url = soup2.find(id="landingImage")
 
-print(title)
-print(price)
-print(about)
-print(img_url['src'])
+        print(title)
+        print(price)
+        print(about)
+        print(img_url['src'])
+    except AttributeError:
+        print("URL ERROR!")
