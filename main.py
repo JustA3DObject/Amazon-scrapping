@@ -54,4 +54,7 @@ page = requests.get(URL, headers=headers)
 soup1 = BeautifulSoup(page.content, "html.parser")
 soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
 title = soup2.find(id="productTitle").get_text()
+price = soup2.find(class_="a-offscreen").get_text()
+
 print(title)
+print(price)
