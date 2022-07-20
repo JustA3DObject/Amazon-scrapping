@@ -43,5 +43,14 @@ def make_url_list():
 
 make_url_list()
 
-html_text = requests.get(url_list[2]).text
-print(html_text)
+URL = url_list[2]
+
+# headers from https://httpbin.org/get
+
+headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36",
+           "X-Amzn-Trace-Id": "Root=1-62d8036d-2b173c1f2e4e7a416cc9e554", "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
+           "Accept-Encoding": "gzip, deflate, br", }
+page = requests.get(URL, headers=headers)
+soup1 = BeautifulSoup(page.content, "html.parser")
+soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
+print(soup2)
