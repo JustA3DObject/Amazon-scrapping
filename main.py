@@ -59,14 +59,17 @@ while(j < 10):
         soup1 = BeautifulSoup(page.content, "html.parser")
         soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
         title = soup2.find(id="productTitle").get_text()
+
+    except AttributeError:
+        print("404 ERROR!")
+
+    else:
         price = soup2.find(class_="a-offscreen").get_text()
         about = soup2.find(
             class_="a-unordered-list a-vertical a-spacing-mini").get_text()
         img_url = soup2.find(id="landingImage")
 
-        print(title)
-        print(price)
-        print(about)
-        print(img_url['src'])
-    except AttributeError:
-        print("URL ERROR!")
+        print(f'Product name: {title.strip()}')
+        print(f'Price: {price.strip()}')
+        print(f'Details: {about.strip()}')
+        print(f"Image URL: {img_url['src'].strip()}")
