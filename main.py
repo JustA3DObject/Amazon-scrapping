@@ -29,5 +29,11 @@ def make_country_list():
 
 make_asin_list()
 make_country_list()
-print(asin_list)
-print(country_list)
+
+url_list = []
+i = 0
+for asin, country in (zip(asin_list, country_list)):
+    url_list.insert(i, f"https://www.amazon.{country}/dp/{asin}")
+    i = i+1
+
+print(url_list)
