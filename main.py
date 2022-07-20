@@ -1,3 +1,4 @@
+import csv
 import requests
 from bs4 import BeautifulSoup
 from openpyxl.workbook import Workbook
@@ -69,7 +70,15 @@ while(j < 10):
             class_="a-unordered-list a-vertical a-spacing-mini").get_text()
         img_url = soup2.find(id="landingImage")
 
-        print(f'Product name: {title.strip()}')
-        print(f'Price: {price.strip()}')
-        print(f'Details: {about.strip()}')
-        print(f"Image URL: {img_url['src'].strip()}")
+        title = title.strip()
+        print(price.strip())
+        about = about.strip()
+        img_url = img_url['src'].strip()
+
+header = ["Product", "Price", "Details", "Image URL"]
+data = [title, price, about, img_url]
+
+with open("AmazonScraperData.csv", 'w', newline='', encoding='UTF8') as f:
+    writer = csv.writer(f)
+    writer.writerow(header)
+    writer.writerow(data)
