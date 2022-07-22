@@ -71,34 +71,30 @@ while(j < 100):
 
         try:
             title = soup2.find(id="productTitle").get_text()
+            title = title.strip()
+        except AttributeError:
+            print("Attribute Error: Title not found.")
+            title = "Title not found."
+        try:
             price = soup2.find(class_="a-offscreen").get_text()
+            price = price.strip()
+        except AttributeError:
+            print("Attribute Error: Price not found.")
+            price = "Price not found"
+        try:
             about = soup2.find(
                 class_="a-unordered-list a-vertical a-spacing-mini").get_text()
-            img_url = soup2.find(id="landingImage")
-
+            about = about.strip()
         except AttributeError:
-            print("Attribute Error!")
-            title = "Data not found"
-
-            json_list = {
-                'title': title,
-                'price': '',
-                'about': '',
-                'img_url': ''
-            }
-            content.append(json_list)
-
-            data = [title]
-            with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
-                writer = csv.writer(f)
-                writer.writerow(data)
+            print("Attribute Error: Description not found.")
+            about = "Description not found"
+        try:
+            img_url = soup2.find(id="landingImage").get('src')
+        except AttributeError:
+            print("Attribute Error: Image not found.")
+            img_url = "Image not found"
 
         else:
-            title = title.strip()
-            price = price.strip()
-            about = about.strip()
-            img_url = img_url['src'].strip()
-
             json_list = {
                 'title': title,
                 'price': price,
