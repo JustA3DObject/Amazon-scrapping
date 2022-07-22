@@ -94,19 +94,18 @@ while(j < 100):
             print("Attribute Error: Image not found.")
             img_url = "Image not found"
 
-        else:
-            json_list = {
-                'title': title,
-                'price': price,
-                'about': about,
-                'img_url': img_url
-            }
-            content.append(json_list)
+        json_list = {
+            'title': title,
+            'price': price,
+            'about': about,
+            'img_url': img_url
+        }
+        content.append(json_list)
 
-            data = [title, price, about, img_url]
-            with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
-                writer = csv.writer(f)
-                writer.writerow(data)
+        data = [title, price, about, img_url]
+        with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow(data)
 
     else:
         print("404 ERROR!")
