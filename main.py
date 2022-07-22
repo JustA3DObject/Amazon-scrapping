@@ -1,5 +1,6 @@
 import csv
 import requests
+import json
 from bs4 import BeautifulSoup
 from openpyxl.workbook import Workbook
 from openpyxl import load_workbook
@@ -7,6 +8,7 @@ from openpyxl import load_workbook
 asin_list = []
 country_list = []
 url_list = []
+content = []
 wb = load_workbook("Amazon Scraping.xlsx")
 ws = wb.active
 col_asin = ws["C"]
@@ -51,7 +53,7 @@ with open("AmazonScraperData.csv", 'w', newline='', encoding='UTF8') as f:
     writer.writerow(header)
 
 j = 0
-while(j < 10):
+while(j < 100):
 
     URL = url_list[j]
     j = j+1
@@ -77,6 +79,15 @@ while(j < 10):
         except AttributeError:
             print("Attribute Error!")
             title = "Data not found"
+
+            json_list = {
+                'title': title,
+                'price': '',
+                'about': '',
+                'img_url': ''
+            }
+            content.append(json_list)
+
             data = [title]
             with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
                 writer = csv.writer(f)
@@ -88,6 +99,14 @@ while(j < 10):
             about = about.strip()
             img_url = img_url['src'].strip()
 
+            json_list = {
+                'title': title,
+                'price': price,
+                'about': about,
+                'img_url': img_url
+            }
+            content.append(json_list)
+
             data = [title, price, about, img_url]
             with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
                 writer = csv.writer(f)
@@ -97,7 +116,18 @@ while(j < 10):
         print("404 ERROR!")
         title = "404 ERROR!"
 
+        json_list = {
+            'title': title,
+            'price': '',
+            'about': '',
+            'img_url': ''
+        }
+        content.append(json_list)
+
         data = [title]
         with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
             writer = csv.writer(f)
             writer.writerow(data)
+
+with open('AmazonScraperData.json', 'w', encoding='utf-8') as f:
+    json.dump(content, f, ensure_ascii=False, indent=4)
