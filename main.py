@@ -66,20 +66,32 @@ while(j < 10):
     if page.status_code == 200:
         soup1 = BeautifulSoup(page.content, "html.parser")
         soup2 = BeautifulSoup(soup1.prettify(), "html.parser")
-        title = soup2.find(id="productTitle").get_text()
-        price = soup2.find(class_="a-offscreen").get_text()
-        about = soup2.find(
-            class_="a-unordered-list a-vertical a-spacing-mini").get_text()
-        img_url = soup2.find(id="landingImage")
-        title = title.strip()
-        price = price.strip()
-        about = about.strip()
-        img_url = img_url['src'].strip()
 
-        data = [title, price, about, img_url]
-        with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
-            writer = csv.writer(f)
-            writer.writerow(data)
+        try:
+            title = soup2.find(id="productTitle").get_text()
+            price = soup2.find(class_="a-offscreen").get_text()
+            about = soup2.find(
+                class_="a-unordered-list a-vertical a-spacing-mini").get_text()
+            img_url = soup2.find(id="landingImage")
+
+        except AttributeError:
+            print("Attribute Error!")
+            title = "Data not found"
+            data = [title]
+            with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
+                writer = csv.writer(f)
+                writer.writerow(data)
+
+        else:
+            title = title.strip()
+            price = price.strip()
+            about = about.strip()
+            img_url = img_url['src'].strip()
+
+            data = [title, price, about, img_url]
+            with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
+                writer = csv.writer(f)
+                writer.writerow(data)
 
     else:
         print("404 ERROR!")
