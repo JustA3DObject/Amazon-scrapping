@@ -1,5 +1,5 @@
 # Amazon-Scraping
-A project to scrape information about different amazon products using ASIN and country code
+A project to scrape information about different amazon products using ASIN and country code which are provided in a spreadsheet.
 
 ## Work flow:
 * Using openpyxl library, the code converts ASIN column from spreadsheet to a python list.
