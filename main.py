@@ -52,11 +52,9 @@ with open("AmazonScraperData.csv", 'w', newline='', encoding='UTF8') as f:
     writer = csv.writer(f)
     writer.writerow(header)
 
-j = 0
-while(j < 100):
+for j in range(100):
 
     URL = url_list[j]
-    j = j+1
     # headers from https://httpbin.org/get
 
     headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.114 Safari/537.36",
@@ -103,10 +101,6 @@ while(j < 100):
         content.append(json_list)
 
         data = [title, price, about, img_url]
-        with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
-            writer = csv.writer(f)
-            writer.writerow(data)
-
     else:
         print("404 ERROR!")
         title = "404 ERROR!"
@@ -120,9 +114,9 @@ while(j < 100):
         content.append(json_list)
 
         data = [title]
-        with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
-            writer = csv.writer(f)
-            writer.writerow(data)
+    with open("AmazonScraperData.csv", 'a+', newline='', encoding='UTF8') as f:
+        writer = csv.writer(f)
+        writer.writerow(data)
 
 with open('AmazonScraperData.json', 'w', encoding='utf-8') as f:
     json.dump(content, f, ensure_ascii=False, indent=4)
